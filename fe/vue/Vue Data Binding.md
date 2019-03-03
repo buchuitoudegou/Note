@@ -1,6 +1,6 @@
 # Vue data binding
 
-[!preview](https://github.com/buchuitoudegou/Note/)
+![preview](https://github.com/buchuitoudegou/Note/raw/master/snapshot/Data%2Bbinding.jpg)
 
 Vue的数据绑定机制利用了观察者设计模式，利用侦听器动态更新DOM元素中的值，以下是Vue在编译时绑定数据的过程。
 
