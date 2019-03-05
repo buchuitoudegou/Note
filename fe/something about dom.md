@@ -1,9 +1,9 @@
 # Something about DOM
 
 ## 目录
-[Node](##节点)
-[Document类型](##Document类型)
-[Element类型](##Element类型)
+* [Node](##节点)
+* [Document类型](##Document类型)
+* [Element类型](##Element类型)
 
 ## DOM的概念
 DOM是针对HTML和XML文档的一个API。它描绘了一个层次化的节点树。
@@ -86,4 +86,13 @@ const arrayNodes = [].slice.call(aNode.childNodes, 0);
 | nodeType | nodeName | nodeValue | parentNode|
 |:-----:|:-----:|:-----:|:-----:|
 | 1 | 标签名 | null | Document或者Element |
-它的子节点可能是Text、Element、Comment、ProcessingInstruction、CDATASection、EntityReference
+它的子节点可能是Text、Element、Comment、ProcessingInstruction、CDATASection、EntityReference。
+
+对于HTMLElement而言，它还有这些属性：
+* id
+* title
+* lang（语言代码）
+* dir（语言方向）
+* className（即定义在元素上的class，由于class是保留字的原因，不能将其当作属性）
+
+HTMLElement还有个很重要的特点：拥有属性（attribute）。利用getAttribute和setAattribute方法就能取得或者设置属性。
