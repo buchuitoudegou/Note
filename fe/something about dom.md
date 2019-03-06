@@ -2,12 +2,12 @@
 
 ## 目录
 * [Node](##节点)
-* [Document类型](##Document类型)
-* [Element类型](##Element类型)
-* [Text类型](##Text类型)
-* [Comment类型](##Comment类型)
-* [CDATASection类型](##CDATASection类型)
-* [Attr类型](##Attr类型)
+* [Document类型](##document)
+* [Element类型](##element类型)
+* [Text类型](##text类型)
+* [Comment类型](##comment类型)
+* [CDATASection类型](##cdadasection类型)
+* [Attr类型](##attr类型)
 * [总结](##总结)
 
 ## DOM的概念
