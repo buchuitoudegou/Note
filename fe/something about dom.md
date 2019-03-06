@@ -4,6 +4,11 @@
 * [Node](##节点)
 * [Document类型](##Document类型)
 * [Element类型](##Element类型)
+* [Text类型](##Text类型)
+* [Comment类型](##Comment类型)
+* [CDATASection类型](##CDATASection类型)
+* [Attr类型](##Attr类型)
+* [总结](##总结)
 
 ## DOM的概念
 DOM是针对HTML和XML文档的一个API。它描绘了一个层次化的节点树。
@@ -95,4 +100,51 @@ const arrayNodes = [].slice.call(aNode.childNodes, 0);
 * dir（语言方向）
 * className（即定义在元素上的class，由于class是保留字的原因，不能将其当作属性）
 
-HTMLElement还有个很重要的特点：拥有属性（attribute）。利用getAttribute和setAattribute方法就能取得或者设置属性。
+HTMLElement还有个很重要的特点：拥有属性（attribute）。利用getAttribute和setAattribute方法就能取得或者设置属性。也可以用removeAttribute移除一个属性。同时，HTMLElement有一个叫attributes的属性，它会存储一个NamedNodeMap，和NodeList一样，是个动态的集合，它的访问方式比较陌生：
+* getNamedItem(name)返回属性名为name的节点
+* removeNamedItem(name)移除属性名为name的节点
+* setNamedItem(name)，添加一个属性节点
+* item(pos)下标访问
+
+除此之外，Element类型还可以通过document.createElement创建。createElement只接受一个参数——标签名。
+
+## Text类型
+顾名思义，就是我们常见的，在标签中的文本。它的基本属性如下：
+| nodeType | nodeName | nodeValue | parentNode |
+|:-----:|:-----:|:-----:|:-----:|
+| 3 | #text | 文本的内容 | Element类型 |
+
+文本类型的操作空间对比元素类型就要差得多了，它的操作都是针对文本自身的操作，如：
+* appendData(data)加入新文本
+* deleteData(offset, count)从offset开始删除count个字符
+* insertData(offset, data)从offset插入data
+* replaceData(offset, count, text)从offset开始的count个字符用text代替
+* splitText(offset)从offset开始把text分成两个文本节点
+* substringData(offset, count)从offset开始count长度的文本
+
+这些方法用得比较少，在需要操作文本节点的时候，大多数情况下会选择直接替换原来的内容。
+
+和Element类型一样，文本节点也支持创建功能。document.createTextNode(text)可以创建一个文本节点。
+
+## Comment类型
+没啥好说……就是注释
+
+## CDATASection类型
+只针对XML文档……不想谈论
+
+## DocumentFragment类型
+在所有的类型节点中，它是唯一在文档中没有对应标记的。DOM规定DocumentFragment是一种轻量级文档，可以包含和控制节点，但不会像完整的文档那样占用额外的资源。基本属性如下
+| nodeType | nodeName | nodeValue | parentNode |
+|:-----:|:-----:|:-----:|:-----:|
+| 11 | #document-fragment | null | null |
+它一般作为一个仓库，存储不同的，可能会添加到文本中的节点。要创建一个文本片段，我们可以使用document.createDocumentFragment方法。在Vue的双向数据绑定实验中，会用到fragment来存储等待编译的DOM节点。要注意的是，如果将某个文档里的节点加入到了文档片段中，文档中的这个节点就会消失，因为每个节点只能有一个父节点。
+
+## Attr类型
+就是我们之前在Element提到过的属性节点。基本属性如下：
+| nodeType | nodeName | nodeValue | parentNode |
+|:-----:|:-----:|:-----:|:-----:|
+| 2 | 属性名 | 属性值 | null |
+虽然它也是节点，但一般不认为是DOM树的一部分。它从属于Element类型的节点，一般通过Element的getAttribute、setAttribute、removeAttribute进行访问。但是这些API都不会返回一个Attr类型的Node，只有用attributes属性和getAttributeNode才能得到一个Attr类型的Node。
+
+## 总结
+本文主要介绍了几个基本的DOM节点以及DOM一级的属性和API，但随着HTML5的出现，DOM实现了更多方便的API。
