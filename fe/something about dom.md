@@ -1,14 +1,14 @@
 # Something about DOM
 
 ## 目录
-* [Node](##节点)
-* [Document类型](##document)
-* [Element类型](##element类型)
-* [Text类型](##text类型)
-* [Comment类型](##comment类型)
-* [CDATASection类型](##cdadasection类型)
-* [Attr类型](##attr类型)
-* [总结](##总结)
+* [Node](#节点)
+* [Document类型](#document)
+* [Element类型](#element类型)
+* [Text类型](#text类型)
+* [Comment类型](#comment类型)
+* [CDATASection类型](#cdadasection类型)
+* [Attr类型](#attr类型)
+* [总结](#总结)
 
 ## DOM的概念
 DOM是针对HTML和XML文档的一个API。它描绘了一个层次化的节点树。
