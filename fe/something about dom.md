@@ -68,9 +68,11 @@ const arrayNodes = [].slice.call(aNode.childNodes, 0);
 
 ## Document类型
 在HTML页面中，Document类型的实例就是我们熟知的window.document，也可以直接用document进行访问。它的基本属性：
+
 | nodeType | nodeName | nodeValue | parentNode | ownerDocument |
 |:-----:|:-----:|:-----:|:-----:|:-----:|
 | 9 | #document | null | null | null |
+
 它的子节点必须是DocumentType（我们常用的DOCTYPE标签），ELEMENT（html），ProcessingInstruction，Comment。它有一个documentElement（文档元素）的属性，始终指向html标签元素。
 
 在HTML页面中，Document类型通常会派生出一个HTMLDocument的类型，它还会有一下这些属性：
@@ -88,9 +90,11 @@ const arrayNodes = [].slice.call(aNode.childNodes, 0);
 
 ## Element类型
 最常用的类型，即我们熟悉的HTML页面元素。基本属性如下：
+
 | nodeType | nodeName | nodeValue | parentNode|
 |:-----:|:-----:|:-----:|:-----:|
 | 1 | 标签名 | null | Document或者Element |
+
 它的子节点可能是Text、Element、Comment、ProcessingInstruction、CDATASection、EntityReference。
 
 对于HTMLElement而言，它还有这些属性：
@@ -110,6 +114,7 @@ HTMLElement还有个很重要的特点：拥有属性（attribute）。利用get
 
 ## Text类型
 顾名思义，就是我们常见的，在标签中的文本。它的基本属性如下：
+
 | nodeType | nodeName | nodeValue | parentNode |
 |:-----:|:-----:|:-----:|:-----:|
 | 3 | #text | 文本的内容 | Element类型 |
@@ -134,16 +139,20 @@ HTMLElement还有个很重要的特点：拥有属性（attribute）。利用get
 
 ## DocumentFragment类型
 在所有的类型节点中，它是唯一在文档中没有对应标记的。DOM规定DocumentFragment是一种轻量级文档，可以包含和控制节点，但不会像完整的文档那样占用额外的资源。基本属性如下
+
 | nodeType | nodeName | nodeValue | parentNode |
 |:-----:|:-----:|:-----:|:-----:|
 | 11 | #document-fragment | null | null |
+
 它一般作为一个仓库，存储不同的，可能会添加到文本中的节点。要创建一个文本片段，我们可以使用document.createDocumentFragment方法。在Vue的双向数据绑定实验中，会用到fragment来存储等待编译的DOM节点。要注意的是，如果将某个文档里的节点加入到了文档片段中，文档中的这个节点就会消失，因为每个节点只能有一个父节点。
 
 ## Attr类型
 就是我们之前在Element提到过的属性节点。基本属性如下：
+
 | nodeType | nodeName | nodeValue | parentNode |
 |:-----:|:-----:|:-----:|:-----:|
 | 2 | 属性名 | 属性值 | null |
+
 虽然它也是节点，但一般不认为是DOM树的一部分。它从属于Element类型的节点，一般通过Element的getAttribute、setAttribute、removeAttribute进行访问。但是这些API都不会返回一个Attr类型的Node，只有用attributes属性和getAttributeNode才能得到一个Attr类型的Node。
 
 ## 总结
