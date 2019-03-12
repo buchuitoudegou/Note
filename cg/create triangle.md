@@ -165,3 +165,57 @@ glEnableVertexAttribArray(0);
 一个储存了顶点属性配置和应使用的VBO的顶点数组对象。一般打算绘制多个物体时，要生成/配置所有VAO，然后储存他们供后面使用。
 
 它可以像VBO那样被绑定，然后所有的*顶点属性调用都会储存再这个VAO中*。这样的好处时，当配置顶点属性指针时，只需要将这些调用执行一次，之后再绘制物体的时候只需要绑定相应的VAO就行了。
+```cpp
+glBindVertexArrays(VAO);
+glDrawArrays(GL_TRIANGLES, 0, 3);
+glBindVertexArrays(0); // unbind
+```
+
+## 索引缓冲对象（EBO）
+假设现在要画两个三角形拼成的矩形，很显然，中间的斜边会交叠在一起，也就是说，有两个顶点会被渲染两次。这是很浪费资源的。因此，我们只需要储存这些不同的顶点，然后设定绘制这些顶点的顺序，就可以绘制矩形了。
+```cpp
+// original vertices
+GLfloat vertices[] = {
+  // 第一个三角形
+  0.5f, 0.5f, 0.0f,   // 右上角
+  0.5f, -0.5f, 0.0f,  // 右下角
+  -0.5f, 0.5f, 0.0f,  // 左上角
+  // 第二个三角形
+  0.5f, -0.5f, 0.0f,  // 右下角
+  -0.5f, -0.5f, 0.0f, // 左下角
+  -0.5f, 0.5f, 0.0f   // 左上角
+};
+
+// new vertices
+GLfloat vertices[] = {
+  0.5f, 0.5f, 0.0f,   // 右上角
+  0.5f, -0.5f, 0.0f,  // 右下角
+  -0.5f, -0.5f, 0.0f, // 左下角
+  -0.5f, 0.5f, 0.0f   // 左上角
+};
+GLuint indices[] = { // 注意索引从0开始! 
+  0, 1, 3, // 第一个三角形
+  1, 2, 3  // 第二个三角形
+};
+```
+根据索引，我们可以看到，第一个三角形用前三个点绘制，第二个三角形用后三个点绘制。定义好索引数组之后，我们就可以构造EBO对象了。
+```cpp
+GLuint EBO;
+glGenBuffers(1, &EBO);
+glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+```
+从这里我们可以看出，EBO的构造绑定和VBO是十分相似的，只是把之前GL_ARRAY_BUFFER改成了GL_ELEMENT_ARRAY_BUFFER。然后我们在绘制图形的时候使用glDrawElement来构造图形。
+```cpp
+glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+```
+第一个参数是绘制模式，第二个参数是参与绘制的顶点数目，第三个是索引类型，最后一个是EBO偏移量。
+
+## 总结
+从本文的长度就可以看出，opengl绘制图形很复杂，大概会有以下几个步骤：
+1. 生成一个窗口
+2. 编写顶点着色器以及片段着色器
+3. 构造着色器程序，链接写好的着色器
+4. 构造EBO、VAO、VBO
+5. 通过glDrawElement或者glDrawArray画图
