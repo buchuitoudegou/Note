@@ -26,3 +26,15 @@ ls -F 显示文件类型
 * opendir(dirname) 打开一个项目
 * readdir(DIR*) 读一个项目，返回值是struct dirent最后一个返回NULL
 * closedir(DIR*) 关闭目录
+* stat(name, ptr) 第一个参数是文件名，第二个是buffer指针，这个指针指向一个struct stat类型。
+```
+struct stat类型
+st_mode 文件类型和许可权限（16位的二进制数）
+st_uid 用户所有者ID
+st_gid 所属组ID
+st_size 所占字节数
+st_nlink 文件链接数
+st_mtime 文件最后修改时间
+st_atime 文件最后访问时间
+st_ctime 文件属性最后改变时间
+```
