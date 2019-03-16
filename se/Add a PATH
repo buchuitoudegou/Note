@@ -1,0 +1,5 @@
+1. sudo vim ~/.bashrc
+2. export PATH=$PATH:/path/to/your/dir
+3. source ~/.bashrc
+
+It will change the PATH of the current USER instead of all users.
