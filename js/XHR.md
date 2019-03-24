@@ -98,7 +98,8 @@ src.close();
 var socket = new WebSocket(url);
 socket.send(JSON.stringify(obj));
 socket.onmessage = function(event) {
-  event.data...
+  const data = event.data
+  ...
 }
 socket.close();
 ```
