@@ -61,6 +61,11 @@ module.exports = {
 最简单的方法就是创建一个`index.html`，并在里面引用`main.bundle.js`。但是，这样也会有别的问题：如果我重新构建之后生成的新js文件名字并不是`main.bundle.js`，则又要打开`index.html`修改里面的引用。这显然是不人性化的。
 
 因此这时候我们就要用到`HtmlWebpackPlugin`模块。他会将生成的bundle全部自动添加到html中。也可以给这个html指定模板。
+
+安装方法：
+```
+npm i html-webpack-plugin html-loader --save-dev
+```
 ```js
 plugins: [
   new HtmlWebPackPlugin({
