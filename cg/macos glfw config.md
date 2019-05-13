@@ -2,7 +2,7 @@
 
 ## 安装cmake
 ```
-brew install
+brew install cmake
 ```
 
 ## 安装glfw
