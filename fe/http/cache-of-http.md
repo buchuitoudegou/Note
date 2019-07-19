@@ -58,5 +58,3 @@ http的Cache-Control字段
 ```
 <meta http-equiv="Cache-Control" content="no-cache">
 ```
-
-## 详细算法
