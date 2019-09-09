@@ -1,0 +1,5 @@
+# 解决GAN在训练过程中需要backward两次而造成的Error
+
+在GAN的训练过程中，D需要用到G生成的fake结果进行训练。这时，我们在训练中，会先对G进行一次backward；当利用这个结果对D训练时，也会backward。由于这张图片是G生成的，因此，第二次backward会同时对G再次backward，这样就会报错。
+
+我们需要给这个fake结果做一个buffer，即同一个结果，但是却不是同一个对象。这样在backward D的过程中，就不会backward到G。
