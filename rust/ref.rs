@@ -52,24 +52,51 @@ fn main() {
     //         next: None,
     //     })); // err: Rc指针指向的内存块不可以改变
     // }
-    let tail = Node {
-        val: 4,
+    
+    // let tail = Node {
+    //     val: 4,
+    //     next: None,
+    // };
+    // let mut cur = Rc::new(tail);
+    // for i in 1..4 {
+    //     cur = Rc::new(Node {
+    //         val: 4 - i,
+    //         next: Some(Rc::clone(&cur)),
+    //     });
+    // }
+    // for i in 0..4 {
+    //     println!("{}", cur.val);
+    //     cur = match &cur.next {
+    //         Some(i) => Rc::clone(i),
+    //         None => break,
+    //     };
+    // }
+    let head = Rc::new(RefCell::new(Node {
+        val: 0,
         next: None,
-    };
-    let mut cur = Rc::new(tail);
-    for i in 1..4 {
-        cur = Rc::new(Node {
-            val: 4 - i,
-            next: Some(Rc::clone(&cur)),
-        });
-    }
-    for i in 0..4 {
-        println!("{}", cur.val);
-        cur = match &cur.next {
-            Some(i) => Rc::clone(i),
-            None => break,
+      }));
+      let mut cur = Rc::clone(&head);
+      for i in 1..4 {
+        let new_node = Rc::new(RefCell::new(Node {
+          val: i,
+          next: None,
+        }));
+        (*cur).borrow_mut().next = Some(Rc::clone(&new_node));
+        cur = Rc::clone(&new_node);
+      }
+      let mut cur = Rc::clone(&head);
+      loop {
+        println!("{}", (*cur).borrow().val);
+        let tmp = Rc::clone(&cur);
+        match  &(*tmp).borrow().next {
+          Some(node) => {
+            cur = Rc::clone(&node);
+          },
+          None => {
+            break;
+          }
         };
-    }
+      }
 }
 
 // 1. 直接用引用的问题：在循环创建Node的时候，Node被放在栈中
